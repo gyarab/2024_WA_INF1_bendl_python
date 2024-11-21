@@ -8,12 +8,15 @@ def fibonacci(n):
     return sequence[:n]
 
 def is_prime(n):
-    if n < 2:
-        return False
-    for i in range(2, int(n**0.5)+1):
-        if n % i == 0:
-            return False
-    return True
+  if not isinstance(n, int) or n <= 0:
+    raise ValueError("n must be a non-negative integer")
+  if n < 2:
+    return False
+  for i in range(2, int(n**0.5)+1):
+    if n % i == 0:
+      return False
+  return True
+
 def primes_in_range(a, b):
   if not isinstance(a, int) or not isinstance(b, int) or a < 0 or b < 0:
     raise ValueError("a and b must be non-negative integers")
