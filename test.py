@@ -14,5 +14,9 @@ def is_prime(n):
         if n % i == 0:
             return False
     return True
-
-print(is_prime(2))
+def primes_in_range(a, b):
+  if not isinstance(a, int) or not isinstance(b, int) or a < 0 or b < 0:
+    raise ValueError("a and b must be non-negative integers")
+  if a > b:
+    a, b = b, a
+  return [n for n in range(a, b+1) if is_prime(n)]
