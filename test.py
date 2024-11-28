@@ -41,16 +41,16 @@ def split_into_threes(text):
 
 
   def class_and_break_time(start_class, end_class):
-      if not isinstance(start_class, int) or not isinstance(end_class, int):
-          raise ValueError("Invalid arguments")
-      if start_class < 1 or end_class < 1 or start_class > end_class:
-          raise ValueError("Invalid class range")
-      if start_class > 8 or end_class > 8:
-          raise ValueError("Arguments must be between 1 and 8")
-  
-      class_time = (end_class - start_class + 1) * 45
-  
-      break_times = [0, 5, 10, 20, 10, 10, 5, 0]
-      break_time = sum(break_times[start_class:end_class+1])
-  
-      return class_time, break_time
+    if not isinstance(start_class, int) or not isinstance(end_class, int):
+      raise ValueError("Invalid arguments")
+    if start_class < 1 or end_class < 1 or start_class > end_class:
+      raise ValueError("Invalid class range")
+    if start_class > 8 or end_class > 8:
+      raise ValueError("Arguments must be between 1 and 8")
+
+    class_time = (end_class - start_class + 1) * 45
+
+    break_times = [0, 5, 10, 20, 10, 10, 5, 0]
+    break_time = sum(break_times[start_class:end_class+1])
+
+    return (class_time, break_time)
