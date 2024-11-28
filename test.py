@@ -23,3 +23,10 @@ def primes_in_range(a, b):
   if a > b:
     a, b = b, a
   return [n for n in range(a, b+1) if is_prime(n)]
+
+def rotate_array(arr, n):
+  if not isinstance(n, int) or n < 0:
+    raise ValueError("n must be a non-negative integer")
+  n = n % len(arr)
+  
+  return arr[-n:] + arr[:-n]
