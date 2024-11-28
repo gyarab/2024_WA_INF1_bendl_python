@@ -31,3 +31,8 @@ def rotate_array(arr, n):
       return arr
     n = n % len(arr)
     return arr[-n:] + arr[:-n]
+
+def split_into_threes(text):
+  if not isinstance(text, str):
+    raise ValueError("Invalid argument")
+  return [text[i:i+3] for i in range(0, len(text), 3)]
