@@ -36,3 +36,10 @@ def split_into_threes(text):
   if not isinstance(text, str):
     raise ValueError("Invalid argument")
   return [text[i:i+3] for i in range(0, len(text), 3)]
+
+def vowels_and_consonants(text):
+  if not isinstance(text, str):
+    raise ValueError("Invalid argument")
+  vowels = [c for c in text if c.lower() in 'aeiou' and c.isalpha()]
+  consonants = [c for c in text if c.lower() not in 'aeiou' and c.isalpha()]
+  return vowels, consonants
