@@ -25,8 +25,9 @@ def primes_in_range(a, b):
   return [n for n in range(a, b+1) if is_prime(n)]
 
 def rotate_array(arr, n):
-  if not isinstance(n, int) or n < 0:
-    raise ValueError("n must be a non-negative integer")
-  n = n % len(arr)
-  
-  return arr[-n:] + arr[:-n]
+    if not isinstance(arr, list) or not isinstance(n, int):
+      raise ValueError("Invalid arguments")
+    if len(arr) == 0:
+      return arr
+    n = n % len(arr)
+    return arr[-n:] + arr[:-n]
