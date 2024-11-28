@@ -43,3 +43,15 @@ def vowels_and_consonants(text):
   vowels = [c for c in text if c.lower() in 'aeiou' and c.isalpha()]
   consonants = [c for c in text if c.lower() not in 'aeiou' and c.isalpha()]
   return vowels, consonants
+  def count_vowels_and_consonants(text):
+    if not isinstance(text, str):
+      raise ValueError("Invalid argument")
+    vowels = 'aeiou'
+    counts = {'vowels': 0, 'consonants': 0}
+    for char in text.lower():
+      if char.isalpha():
+        if char in vowels:
+          counts['vowels'] += 1
+        else:
+          counts['consonants'] += 1
+    return counts
