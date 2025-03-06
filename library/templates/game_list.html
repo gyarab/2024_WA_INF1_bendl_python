@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <style>
+    .game-list{
+        margin:0px;
+        display: grid;
+        background-color: rgb(86, 57, 7);
+        grid-template-columns: 1fr 1fr ;
+        grid-template-columns: auto auto ;
+    }
+    .game {
+        margin: 0; 
+        background-color: rgb(196, 91, 91);
+        justify-content: center;
+        align-items: center;
+}
+
+    .game img {
+        width: 100%;
+        aspect-ratio: 16/9;
+    }
+
+    </style>
+    <section class ="game-list">
+            {% for game in games %}
+            <section class = "game">
+                <img src="{{ game.preview.url }}" alt="{{ game.name }}">
+                <h3>{{ game.name }}</h3>
+                <span>{{ game.autor }} - {{ game.genre }}</span>
+                
+            </section>
+            {% endfor %}
+        
+    </section>
+{% endblock %}
+
+    
