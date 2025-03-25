@@ -11,3 +11,13 @@ class Game(models.Model):
     
     def __str__(self):
         return self.name
+    
+class Comment(models.Model):
+    game = models.ForeignKey(Game, on_delete=models.CASCADE, related_name="comments")  # Vazba 1:N
+    text = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)  # Automaticky nastaví čas při vytvoření
+    ip_address = models.GenericIPAddressField(null=True, blank=True)  # IP adresa uživatele
+    user_agent = models.TextField(null=True, blank=True)  # User Agent uživatele
+
+    def __str__(self):
+        return f"Komentář k {self.game.name} ({self.created_at})"

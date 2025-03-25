@@ -1,7 +1,8 @@
 import os
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
-from .models import Game
+from .models import Game, Comment
+from .forms import CommentForm
 import json
 
 
@@ -11,31 +12,19 @@ def libraryHomepage(request):
     return render(request, 'game_list.html', {'games': games})
 
 def gameInfo(request, id):
-    game = Game.objects.get(pk=id)
-    return render(request, 'game_detail.html', {'game': game})
+    game = get_object_or_404(Game, pk=id)
+    comments = game.comments.all()
 
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.game = game
+            comment.ip_address = request.META.get('REMOTE_ADDR')  # Získání IP adresy
+            comment.user_agent = request.META.get('HTTP_USER_AGENT')  # Získání User Agentu
+            comment.save()
+            return redirect('gameInfo', id=game.id)
+    else:
+        form = CommentForm()
 
-
-    # with open(os.path.join(os.path.dirname(__file__), 'games.json'), encoding='utf-8') as f:
-    #     games = json.load(f)
-    # gamesImg = ""
-    # for index, game in enumerate(games):
-    #     gamesImg += f'<a href="./game/{index}"><img src="{game["image"]}" alt="{game["name"]}"></a>'
-    # return HttpResponse(gamesImg)
-
-# def gameInfo(request, id):
-#     with open(os.path.join(os.path.dirname(__file__), 'games.json'), encoding='utf-8') as f:
-#         games = json.load(f)
-#     gamesInfo = games[int(id)]
-#     name  = gamesInfo["name"]
-#     desc  = gamesInfo["description"]
-#     image = gamesInfo["image"]
-#     genre = gamesInfo["genre"]
-#     autor = gamesInfo["autor"]
-#     return HttpResponse(f"""
-#         <h1>{name}</h1>
-#         <p>{desc}</p>
-#         <img src="{image}" alt="{name}">
-#         <p>Žánr:  {genre} </p>
-#         <p>Autor: {autor} </p>
-#     """)
+    return render(request, 'game_detail.html', {'game': game, 'comments': comments, 'form': form})

@@ -2,37 +2,52 @@
 
 {% block content %}
     <style>
-    .game-list{
-        margin:0px;
-        display: grid;
-        background-color: rgb(86, 57, 7);
-        grid-template-columns: 1fr 1fr ;
-        grid-template-columns: auto auto ;
-    }
-    .game {
-        margin: 0; 
-        background-color: rgb(196, 91, 91);
-        justify-content: center;
-        align-items: center;
-}
-
-    .game img {
-        width: 100%;
-        aspect-ratio: 16/9;
-    }
-
+        .game-detail {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            background-color: rgb(86, 57, 7);
+            color: white;
+            border-radius: 10px;
+        }
+        .game-detail img {
+            width: 100%;
+            border-radius: 10px;
+        }
+        .comments {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: rgb(196, 91, 91);
+            border-radius: 10px;
+        }
+        .comment-form {
+            margin-top: 20px;
+        }
     </style>
-    <section class ="game-list">
-            {% for game in games %}
-            <section class = "game">
-                <img src="{{ game.preview.url }}" alt="{{ game.name }}">
-                <h3>{{ game.name }}</h3>
-                <span>{{ game.autor }} - {{ game.genre }}</span>
-                
-            </section>
-            {% endfor %}
-        
+
+    <section class="game-detail">
+        <h1>{{ game.name }}</h1>
+        <img src="{{ game.preview.url }}" alt="{{ game.name }}">
+        <p>{{ game.description }}</p>
+        <p><strong>Žánr:</strong> {{ game.genre }}</p>
+        <p><strong>Autor:</strong> {{ game.autor }}</p>
+    </section>
+
+    <section class="comments">
+        <h2>Komentáře</h2>
+        {% for comment in comments %}
+            <p><strong>{{ comment.created_at }}</strong>: {{ comment.text }}</p>
+        {% empty %}
+            <p>Zatím žádné komentáře.</p>
+        {% endfor %}
+    </section>
+
+    <section class="comment-form">
+        <h2>Přidat komentář</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Odeslat</button>
+        </form>
     </section>
 {% endblock %}
-
-    

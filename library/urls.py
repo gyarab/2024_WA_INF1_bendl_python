@@ -2,9 +2,7 @@
 from django.urls import path
 from . import views
 
-
 urlpatterns = [
-    path(''            , views.libraryHomepage),
-    path('game/<int:id>', views.gameInfo)
-     
+    path('', views.libraryHomepage, name='libraryHomepage'),
+    path('game/<int:id>/', views.gameInfo, name='gameInfo'),  # Přidání name pro lepší odkazování
 ]
