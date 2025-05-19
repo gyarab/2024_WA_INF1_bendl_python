@@ -4,12 +4,23 @@
         <meta charset="UTF-8">
         <title>Library of games</title>
     </head>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0;
+            background-color: #492f09;
+            color: antiquewhite;
+            font-style: Times New Roman;
+        }
+    </style>
     <body>
         <div id = "external-Header">
             {% include 'header.html' %}
         </div>
         <div id = "external-about">
-            <h2>add About</h2>
+            <h2>about</h2>
         </div>
         <main >
             {%block content%}{%endblock%}
