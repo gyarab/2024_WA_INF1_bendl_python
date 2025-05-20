@@ -118,19 +118,40 @@
     <div id="Header" class="main-header">
         <div class="left">
             <a href="../Main-Website/DaSiHa.html">
-                <img src="../Main-Website/PNG/logo_DaSiHa.png" alt="Home">
+                <img src="../../media/logos/logo_dasiha.png" alt="Home">
             </a> 
         </div>
         <div class="mid">
             {% for game in games %}
-            <a href="{{ game.url }}">
+            <a href="{{ game.urlv }}">
                 <img src="{{ game.logo.url }}" alt="{{ game.name }} logo unavailable"> 
             </a>
             {% endfor %}
         </div>
         <div class="right">
+            {% if request.user.is_authenticated %}
+            <li>
+              <a class="hover:text-gray-400" href="{% url 'libraryHomepage' %}" id="user">{{request.user}}</a>
+            </li>
+            <li>
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit">Logout</button>
+                </form>
+            </li>
+            {% else %}
+            <li>
+              <a class="hover:text-gray-400" href="{% url 'login' %}" id="login">Login</a>
+            </li>
+            <li>
+              <a class="hover:text-gray-400" href="{% url 'register' %}" id="register">Register</a>
+            </li>
+            {% endif %}
             <a href="/Monkey-Engine/MonkeyEngine.html" >
-                <img src="" alt="SETTING">
+                <img src="../../media/logos/logo_account.png" alt="Account">
+            </a>
+            <a href="/Monkey-Engine/MonkeyEngine.html" >
+                <img src="../../media/logos/setting2.png" alt="Settings">
             </a>
         </div>
     </div>
