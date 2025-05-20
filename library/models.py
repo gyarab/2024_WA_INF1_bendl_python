@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 #---------------------Categories---------------------#
 class Genre(models.Model):
@@ -20,6 +21,7 @@ class Game(models.Model):
     thumbnail  = models.ImageField(upload_to='thumbnails/', default='thumbnails/default_thumbnail.png')
     code_path = models.CharField(blank=True, null=True)
     descript  = models.TextField(blank=True, null=True)
+    favorited_by = models.ManyToManyField(User, related_name='favorite_games', blank=True)
     
     def __str__(self):
         return self.name

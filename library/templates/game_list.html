@@ -32,6 +32,14 @@
         .game-detail:hover .overlay {
             transform: scale(1.05);
         } 
+        .game-detail .fav-icon{
+            position: absolute;
+            top: 2%;
+            right: 2%;
+            height: 10%;
+            width: auto;
+            cursor: pointer;
+        }
         .comments {
             margin-top: 20px;
             padding: 10px;
@@ -62,20 +70,56 @@
         /*------------@media------------*/
         @media (max-width: 1200px) {
             .game-list {
-            grid-template-columns: 1fr 1fr 1fr;
+                grid-template-columns: 1fr 1fr 1fr;
             }
         }
         @media (max-width: 960px) {
             .game-list {
-            grid-template-columns: 1fr 1fr;
+                grid-template-columns: 1fr 1fr;
             }
         }
         @media (max-width: 680px) {
             .game-list {
-            grid-template-columns: 1fr;
+                grid-template-columns: 1fr;
             }
         }
     </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const csrfToken = '{{ csrf_token }}';
+
+            // Use event delegation instead of attaching to every icon
+            document.querySelector('.game-list').addEventListener('click', function (e) {
+                const icon = e.target.closest('.fav-icon');
+                if (!icon) return; // Not a favorite icon
+
+                const gameId = icon.dataset.gameId;
+
+                // Prevent double click
+                if (icon.dataset.locked === "true") return;
+                icon.dataset.locked = "true";
+
+                fetch("{% url 'toggle_favorite' %}", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'X-CSRFToken': csrfToken,
+                    },
+                    body: new URLSearchParams({ game_id: gameId })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    icon.src = data.favorited
+                        ? '/media/logos/logo_fav.png'
+                        : '/media/logos/logo_nonfav.png';
+                })
+                .catch(err => console.error('Toggle failed', err))
+                .finally(() => {
+                    icon.dataset.locked = "false";
+                });
+            });
+        });
+    </script>
     <section class="game-list">
         {% for game in games %}
         <section class="game-detail">
@@ -84,6 +128,14 @@
                 src = "{{ game.thumbnail.url }}" 
                 alt = "{{ game.name }} thumnail is not available"
             >
+            {% if user.is_authenticated %} 
+                <img 
+                    class="fav-icon"
+                    src="{% if user in game.favorited_by.all %}/media/logos/logo_fav.png{% else %}/media/logos/logo_nonfav.png{% endif %}" 
+                    data-game-id="{{ game.id }}"
+                    alt="fav-icon"
+                />
+            {% endif %}
             <div class="overlay">
                 <h1></h1>
             </div>

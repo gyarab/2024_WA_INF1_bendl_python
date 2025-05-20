@@ -6,6 +6,9 @@ from django.contrib.auth.views import LoginView
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic.edit import FormView
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
+from django.http import JsonResponse
 from .models import Game # ,Comment
 # from .forms import CommentForm
 import json
@@ -35,8 +38,28 @@ class RegisterPageView(FormView):
             return redirect(reverse_lazy('libraryHomepage'))
         return super(RegisterPageView, self).get(*args, **kwargs)
 
+@require_POST
+@login_required
+def toggle_favorite(request):
+    game_id = request.POST.get('game_id')
+    if not game_id:
+        return JsonResponse({'error': 'No game ID provided.'}, status=400)
 
-# Create your views here.
+    try:
+        game = Game.objects.get(id=game_id)
+    except Game.DoesNotExist:
+        return JsonResponse({'error': 'Game not found.'}, status=404)
+
+    user = request.user
+    if user in game.favorited_by.all():
+        game.favorited_by.remove(user)
+        favorited = False
+    else:
+        game.favorited_by.add(user)
+        favorited = True
+
+    return JsonResponse({'favorited': favorited})
+
 def libraryHomepage(request):
     games = Game.objects.all()
     return render(request, 'game_list.html', {'games': games})
