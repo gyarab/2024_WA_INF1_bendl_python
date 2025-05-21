@@ -118,7 +118,8 @@
     <div id="Header" class="main-header">
         <div class="left">
             <a href="">
-                <img src="{% static 'logos/logo_dasiha.png' %}" alt="Home">
+                {% load static %}
+                <img src="{% static '/logos/logo_dasiha.png' %}" alt="Home">
             </a> 
         </div>
         <div class="mid">
