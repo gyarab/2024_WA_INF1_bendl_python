@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+    <main>
+        <div class = "ad-Panel" >
+            <!--  -->
+        </div>
+
+        <div class = "gameSection">
+            <canvas id="herniRozhraní" width="1920" height="1080"></canvas>
+            <div class="game-Controls">
+            <img src="../Main-Website/PNG/sss.png" alt="rateings" class="rateings">
+            <img src="../Main-Website/PNG/fullscreen.png" alt="fullscreen" class="fullscreen" id="fullscreenButton">
+            </div>
+        </div>
+
+        <div class = "ad-Panel">
+            <!--  -->
+        </div>
+        
+  </main>
+  <script>
+    document.getElementById('fullscreenButton').addEventListener('click', function() {
+      var canvas = document.getElementById('herniRozhraní');
+      if (canvas.requestFullscreen) {
+        canvas.requestFullscreen();
+      } else if (canvas.mozRequestFullScreen) { // Firefox
+        canvas.mozRequestFullScreen();
+      } else if (canvas.webkitRequestFullscreen) { // Chrome, Safari and Opera
+        canvas.webkitRequestFullscreen();
+      } else if (canvas.msRequestFullscreen) { // IE/Edge
+        canvas.msRequestFullscreen();
+      }
+    });
+  </script>
+{% endblock %}
