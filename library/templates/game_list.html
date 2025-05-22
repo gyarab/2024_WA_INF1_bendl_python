@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
     <style>
         .game-list {
@@ -88,14 +88,21 @@
         document.addEventListener('DOMContentLoaded', function () {
             const csrfToken = '{{ csrf_token }}';
 
-            // Use event delegation instead of attaching to every icon
+            // Static paths provided by Django
+            const logoFav = "{% static 'logos/logo_fav.png' %}";
+            const logoNonFav = "{% static 'logos/logo_nonfav.png' %}";
+
+            // Set initial fav icon based on data-favorited
+            document.querySelectorAll('.fav-icon').forEach(icon => {
+                icon.src = (icon.dataset.favorited === "true") ? logoFav : logoNonFav;
+            });
+
             document.querySelector('.game-list').addEventListener('click', function (e) {
                 const icon = e.target.closest('.fav-icon');
-                if (!icon) return; // Not a favorite icon
+                if (!icon) return;
 
                 const gameId = icon.dataset.gameId;
 
-                // Prevent double click
                 if (icon.dataset.locked === "true") return;
                 icon.dataset.locked = "true";
 
@@ -109,9 +116,8 @@
                 })
                 .then(response => response.json())
                 .then(data => {
-                    icon.src = data.favorited
-                        ? '/media/logos/logo_fav.png'
-                        : '/media/logos/logo_nonfav.png';
+                    icon.src = data.favorited ? logoFav : logoNonFav;
+                    icon.dataset.favorited = data.favorited;
                 })
                 .catch(err => console.error('Toggle failed', err))
                 .finally(() => {
@@ -121,7 +127,6 @@
         });
     </script>
     <section class="game-list">
-        {% load static %}
         {% for game in games %}
         <section class="game-detail">
             <img 
@@ -132,8 +137,9 @@
             {% if user.is_authenticated %} 
                 <img 
                     class="fav-icon"
-                    src="{% if user in game.favorited_by.all %}/media/logos/logo_fav.png{% else %}/media/logos/logo_nonfav.png{% endif %}" 
+                    src="{% static 'logos/logo_nonfav.png' %}" 
                     data-game-id="{{ game.id }}"
+                    data-favorited="{{ game.is_favorited }}"
                     alt="fav-icon"
                 />
             {% endif %}

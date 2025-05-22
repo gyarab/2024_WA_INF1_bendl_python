@@ -61,7 +61,10 @@ def toggle_favorite(request):
     return JsonResponse({'favorited': favorited})
 
 def libraryHomepage(request):
-    games = Game.objects.all()
+    games = Game.objects.all().prefetch_related('favorited_by')    
+    for game in games:
+        game.is_favorited = request.user.is_authenticated and request.user in game.favorited_by.all()
+
     return render(request, 'game_list.html', {'games': games})
 #
 def gameInfo(request, id):
