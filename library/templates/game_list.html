@@ -121,12 +121,13 @@
         });
     </script>
     <section class="game-list">
+        {% load static %}
         {% for game in games %}
         <section class="game-detail">
             <img 
-                class = "game-thumbnail"
-                src = "{{ game.thumbnail.url }}" 
-                alt = "{{ game.name }} thumnail is not available"
+                class="game-thumbnail"
+                src="{{ game.thumbnail.url }}" 
+                alt="{{ game.name }} thumbnail is not available"
             >
             {% if user.is_authenticated %} 
                 <img 
