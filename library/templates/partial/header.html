@@ -1,0 +1,159 @@
+<style>
+    /*    Main header    */
+    .main-header {
+        display: flex;
+        width: 100%;
+        background-color: antiquewhite;
+    }
+    .main-header img {
+        width: 45px;
+        height: 45px;
+        object-fit: contain;
+    }
+    /*    Left section    */
+    .main-header .left     {
+        flex: 1 1 15%;
+        display: flex;
+        justify-content: flex-start;
+        padding: 20px;
+        align-items: center;
+    }
+    .main-header .left img {
+        width: 100%;
+        max-width: 80px;
+        min-width: 70px;
+    }
+    /*    Middle section   */
+    .main-header .mid      {
+        flex: 1 1 70%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .main-header .mid a    {
+        width: 100%;
+        max-width: 70px;
+        margin: 15px;
+    } 
+    .main-header .mid img  {
+        max-width: 50px;
+        max-height: 50px;
+        width: auto;
+        height: auto;
+        object-fit: contain;
+    }
+    /*    Right section    */
+    .main-header .right    {
+        flex: 1 1 15%;
+        display: flex;
+        justify-content: flex-end;
+        padding: 20px;
+        align-items: center;
+    }
+    .main-header .right img{
+        width: 100%;
+        max-width: 40px;
+    }
+    /*    Responsivity    */
+    @media (max-width: 768px) {
+        .main-header .mid{
+            display: none;
+        }
+        #burger-icon {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: #ccc;
+            border-radius: 5px;
+        }
+        #burger-menu {
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+            padding: 0;
+        }
+        #burger-toggle:checked + label + #burger-menu {
+            display: flex;
+        }
+        #burger-toggle:checked ~ .mid img {
+            display: none;
+        }
+        #burger-menu a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            text-decoration: none;
+            color: black;
+        }
+        #burger-menu img {
+            width: 40px;
+            height: 40px;
+        }
+    }
+    @media (min-width: 769px) {
+        #burger-icon,
+        #burger-menu {
+            display: none;
+        }
+        .main-header .mid {
+            display: flex;
+            flex-direction: row;
+        }
+        .main-header .mid a img {
+            width: auto;
+            height: auto;
+            transition: all 0.2s ease-in-out;
+        }
+        .main-header .mid a:hover img {
+            transform: scale(1.5);
+        }
+    }
+</style>
+<header>
+    {% load static %}
+    <div id="Header" class="main-header">
+        <div class="left">
+            <a href="">
+                <img src="{% static '/logos/logo_dasiha.png' %}" alt="Home">
+            </a> 
+        </div>
+        <div class="mid">
+            {% for game in games %}
+            <a href="{{ game.url }}">
+                <img src="{{ game.logo.url }}" alt="{{ game.name }} logo unavailable"> 
+            </a>
+            {% endfor %}
+        </div>
+        <div class="right">
+            {% if request.user.is_authenticated %}
+            <li>
+            <a class="hover:text-gray-400" href="{% url 'libraryHomepage' %}" id="user">{{request.user}}</a>
+            </li>
+            <li>
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit">Logout</button>
+                </form>
+            </li>
+            {% else %}
+            <li>
+            <a class="hover:text-gray-400" href="{% url 'login' %}" id="login">Login</a>
+            </li>
+            <li>
+            <a class="hover:text-gray-400" href="{% url 'register' %}" id="register">Register</a>
+            </li>
+            {% endif %}
+            <a href="" >
+                <img src="{% static 'logos/logo_account.png' %}" alt="Account">
+            </a>
+            <a href="" >
+                <img src="{% static 'logos/setting2.png' %}" alt="Settings">
+            </a>
+        </div>
+    </div>
+</header>
+

@@ -1,22 +1,72 @@
 {% extends 'base.html' %}
+{%block styles%}
+{{block.super}}
+  <style>
+    main {
+      margin: 10px;
+      display: flex;
+    }
+    .gameSection {
+        align-items: center;
+        justify-content: center;
+        display: flex;
+        flex-basis: 70%;
+        flex-direction: column;
+    }
+    .gameSection .game-Controls{
+        display: flex;
+        flex-direction:row;
+        justify-content: space-between;
+        width: 95%;
+    }
+    .game-Controls .rateings{
+        max-height: 25px;
+    }
+    .game-Controls .fullscreen{
+        max-height: 25px;
+        background-color: tan;
+    }
+    canvas {
+        border: 1px solid black;
+        background-color: white;
+        width: 100%;
+        height: auto;
+        max-width: 1920px;
+        max-height: 1080px;
+    }
+    .ad-Panel{
+        background-color: tan;
+        margin: 0;
+        flex-basis: 15%;
+    }
+    .ad-Panel img{
+        width: 100%;
+        height: auto;
+    }
+    @media (max-width: 768px) {
+        .ad-Panel {
+            display: none;
+        }
+        .gameSection {
+            flex-basis: 100%;
+        }
+        canvas {
+            width: 100%;
+        }
+    }
+  </style>
+{% endblock %}
 {% block content %}
-    <main>
-        <div class = "ad-Panel" >
-            <!--  -->
+  <main>
+    <div class = "ad-Panel" ><!----></div>
+    <div class = "gameSection">
+        <canvas id="herniRozhraní" width="1920" height="1080"></canvas>
+        <div class="game-Controls">
+        <img src="../Main-Website/PNG/sss.png" alt="rateings" class="rateings">
+        <img src="../Main-Website/PNG/fullscreen.png" alt="fullscreen" class="fullscreen" id="fullscreenButton">
         </div>
-
-        <div class = "gameSection">
-            <canvas id="herniRozhraní" width="1920" height="1080"></canvas>
-            <div class="game-Controls">
-            <img src="../Main-Website/PNG/sss.png" alt="rateings" class="rateings">
-            <img src="../Main-Website/PNG/fullscreen.png" alt="fullscreen" class="fullscreen" id="fullscreenButton">
-            </div>
-        </div>
-
-        <div class = "ad-Panel">
-            <!--  -->
-        </div>
-        
+    </div>
+    <div class = "ad-Panel"><!----></div>    
   </main>
   <script>
     document.getElementById('fullscreenButton').addEventListener('click', function() {

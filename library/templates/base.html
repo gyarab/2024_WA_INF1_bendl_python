@@ -4,26 +4,23 @@
         <meta charset="UTF-8">
         <title>Library of games</title>
     </head>
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-        body {
-            margin: 0;
-            background-color: #492f09;
-            color: antiquewhite;
-            font-style: Times New Roman;
-        }
-    </style>
+    {%block styles%}
+        <style>
+            * {
+                box-sizing: border-box;
+            }
+            body {
+                margin: 0;
+                background-color: #492f09;
+                color: antiquewhite;
+                font-style: Times New Roman;
+            }
+        </style>
+    {%endblock%}
     <body>
         <div id = "external-Header">
-            {% include 'header.html' %}
+            {% include 'partial/header.html' %}
         </div>
-        <div id = "external-about">
-            <h2>about</h2>
-        </div>
-        <main >
-            {%block content%}{%endblock%}
-        </main>
+        {%block content%}{%endblock%}
     </body>
 </html>

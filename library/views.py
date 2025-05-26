@@ -9,10 +9,28 @@ from django.views.generic.edit import FormView
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.http import JsonResponse
-from .models import Game # ,Comment
-# from .forms import CommentForm
+from .models import Game
 import json
 
+
+def gameInfo(request, id):
+    game = get_object_or_404(Game, pk=id)
+    all_games = Game.objects.all()
+
+    return render(request, 'game.html', {
+        'game': game,
+        'games' : all_games
+        })
+def libraryHomepage(request):
+
+    all_games = Game.objects.all().prefetch_related('favorited_by') 
+
+    for game in all_games:
+        game.is_favorited = request.user.is_authenticated and request.user in game.favorited_by.all()
+
+    return render(request, 'homepage.html', {
+        'games':  all_games
+    })
 
 class LoginPageView(LoginView):
     template_name = 'login.html'
@@ -42,6 +60,7 @@ class RegisterPageView(FormView):
 @login_required
 def toggle_favorite(request):
     game_id = request.POST.get('game_id')
+    print(f"Game ID: {game_id}")
     if not game_id:
         return JsonResponse({'error': 'No game ID provided.'}, status=400)
 
@@ -59,34 +78,3 @@ def toggle_favorite(request):
         favorited = True
 
     return JsonResponse({'favorited': favorited})
-
-def libraryHomepage(request):
-    games = Game.objects.all().prefetch_related('favorited_by')    
-    for game in games:
-        game.is_favorited = request.user.is_authenticated and request.user in game.favorited_by.all()
-
-    return render(request, 'game_list.html', {'games': games})
-#
-def gameInfo(request, id):
-    game = get_object_or_404(Game, pk=id)
-
-    # comments = game.comments.all()
-    # Form handling is commented out as requested
-    # if request.method == "POST":
-    #     form = CommentForm(request.POST)
-    #     if form.is_valid():
-    #         comment = form.save(commit=False)
-    #         comment.game = game
-    #         comment.ip_address = request.META.get('REMOTE_ADDR')  # Get IP address
-    #         comment.user_agent = request.META.get('HTTP_USER_AGENT')  # Get User Agent
-    #         comment.save() 
-    #         return redirect('gameInfo', id=game.id)
-    # else:
-    #     form = CommentForm()
-
-    # Render the template without form-related context
-    return render(request, 'game_detail.html', {
-        'game': game,
-        # 'comments': comments,
-        # 'form': form  # Commented out as requested
-    })
