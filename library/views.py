@@ -10,7 +10,6 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.http import JsonResponse
 from .models import Game
-import json
 from django.views.decorators.csrf import csrf_exempt
 
 
@@ -22,6 +21,7 @@ def gameInfo(request, id):
         'game': game,
         'games' : all_games
         })
+
 def libraryHomepage(request):
 
     all_games = Game.objects.all().prefetch_related('favorited_by') 
@@ -80,15 +80,38 @@ def toggle_favorite(request):
 
     return JsonResponse({'favorited': favorited})
 
-@csrf_exempt
+from django.conf import settings
+from django.utils.text import get_valid_filename
+from uuid import uuid4
+from django.views.decorators.csrf import csrf_protect
+from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+import os
+
+@csrf_protect  # Enables CSRF protection
 @login_required
 def model_upload(request):
     if request.method == 'POST' and request.FILES.get('model_file'):
         model_file = request.FILES['model_file']
-        file_path = os.path.join('uploads', model_file.name)
+
+        # Validate file size and extension
+        if model_file.size > 10 * 1024 * 1024:
+            return JsonResponse({'error': 'File too large.'}, status=400)
+
+        allowed_extensions = ['.glb', '.gltf']
+        if not any(model_file.name.endswith(ext) for ext in allowed_extensions):
+            return JsonResponse({'error': 'Unsupported file type.'}, status=400)
+
+        # Safe filename handling
+        filename = get_valid_filename(model_file.name)
+        filename = f"{uuid4().hex}_{filename}"
+        file_path = os.path.join(settings.MEDIA_ROOT, 'uploads', filename)
+
         os.makedirs(os.path.dirname(file_path), exist_ok=True)
         with open(file_path, 'wb+') as destination:
             for chunk in model_file.chunks():
                 destination.write(chunk)
-        return JsonResponse({'status': 'success', 'file': model_file.name})
+
+        return JsonResponse({'status': 'success', 'file': filename})
+
     return JsonResponse({'error': 'No file uploaded.'}, status=400)
