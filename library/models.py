@@ -16,7 +16,7 @@ class Game(models.Model):
     name  = models.CharField (max_length=100)
     genre = models.ManyToManyField(Genre)
     autor = models.ManyToManyField(Author)
-    logo      = models.ImageField(upload_to = 'logos/'  , default='logos/default_logo.png')
+    logo      = models.ImageField(upload_to = 'logos'  , default='logos/default_logo.png')
     preview   = models.ImageField(upload_to = 'previews/', default='previews/default_previews.png')
     thumbnail = models.ImageField(upload_to = 'thumbnails/', default='thumbnails/default_thumbnail.png')
     code_path = models.CharField(blank=True, null=True)

@@ -10,6 +10,7 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(next_page='libraryHomepage'), name='logout'),
     path('register/', RegisterPageView.as_view(), name='register'),
     path('game/<int:id>/', views.gameInfo, name='gameInfo'),
+    path(r'^$', views.model_upload, name='uploadindex'),
     path('toggle-favorite/', views.toggle_favorite, name='toggle_favorite'),
 
 ]
