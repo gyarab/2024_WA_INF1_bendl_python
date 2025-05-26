@@ -11,6 +11,7 @@ from django.views.decorators.http import require_POST
 from django.http import JsonResponse
 from .models import Game
 import json
+from django.views.decorators.csrf import csrf_exempt
 
 
 def gameInfo(request, id):
@@ -78,3 +79,16 @@ def toggle_favorite(request):
         favorited = True
 
     return JsonResponse({'favorited': favorited})
+
+@csrf_exempt
+@login_required
+def model_upload(request):
+    if request.method == 'POST' and request.FILES.get('model_file'):
+        model_file = request.FILES['model_file']
+        file_path = os.path.join('uploads', model_file.name)
+        os.makedirs(os.path.dirname(file_path), exist_ok=True)
+        with open(file_path, 'wb+') as destination:
+            for chunk in model_file.chunks():
+                destination.write(chunk)
+        return JsonResponse({'status': 'success', 'file': model_file.name})
+    return JsonResponse({'error': 'No file uploaded.'}, status=400)

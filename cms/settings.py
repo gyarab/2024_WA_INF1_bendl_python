@@ -15,7 +15,10 @@ import os
 import socket
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+
 BASE_DIR = Path(__file__).resolve().parent.parent
+MEDIA_URL = '/media/' #'/var/caddy.root.d/dasiha.svs.gyarab.cz/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -76,7 +79,6 @@ WSGI_APPLICATION = 'cms.wsgi.application'
 current_hostname = socket.gethostname()
 
 if current_hostname == "avava":
-    MEDIA_URL = '/var/caddy.root.d/dasiha.svs.gyarab.cz/media/'
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
@@ -86,14 +88,15 @@ if current_hostname == "avava":
         }
     }
 else:
-    MEDIA_URL = '/media/'
+
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME': BASE_DIR / 'db.sqlite3',
         }
     }
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
 print(f"Using database settings for {current_hostname}: {DATABASES['default']}")
 
 # Password validation
