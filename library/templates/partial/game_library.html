@@ -95,7 +95,7 @@
         {% if user.is_authenticated %} 
             <img 
                 class="fav-icon"
-                src="{% static 'logos/logo_nonfav.png' %}" 
+                src="{% static 'icons/nonfav.png' %}" 
                 data-game-id="{{ game.id }}"
                 data-favorited="{{ game.is_favorited }}"
                 alt="fav-icon"
@@ -125,8 +125,8 @@
         const csrfToken = '{{ csrf_token }}';
 
         // Static paths provided by Django
-        const logoFav = "{% static 'logos/logo_fav.png' %}";
-        const logoNonFav = "{% static 'logos/logo_nonfav.png' %}";
+        const logoFav = "{% static 'icons/fav.png' %}";
+        const logoNonFav = "{% static 'icons/nonfav.png' %}";
 
         // Set initial fav icon based on data-favorited
         document.querySelectorAll('.fav-icon').forEach(icon => {
