@@ -1,5 +1,5 @@
 asgiref==3.8.1
--e git+https://github.com/django/django.git@37373d9ae969f3c3b8b1ffcec9ffb0e00ec267c3#egg=Django
+django
 pillow==11.1.0
 sqlparse==0.5.3
 tzdata==2024.2

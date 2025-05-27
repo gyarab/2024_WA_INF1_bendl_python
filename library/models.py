@@ -15,7 +15,7 @@ class Author(models.Model):
 class Game(models.Model):
     name  = models.CharField (max_length=100)
     genre = models.ManyToManyField(Genre)
-    autor = models.ManyToManyField(Author)
+    autors = models.ManyToManyField(Author)
     logo      = models.ImageField(upload_to = 'logos/'  ,blank=True, null=True)
     preview   = models.ImageField(upload_to = 'previews/',blank=True, null=True)
     thumbnail = models.ImageField(upload_to = 'thumbnails/',blank=True, null=True)
