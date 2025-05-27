@@ -1,4 +1,9 @@
+# virtual environment
 venv/
+#_cache for Python code
 __pycache__/
+library/__pycache__/
+library/migrations/__pycache__/
+# database files
 db.sqlite3
 media/

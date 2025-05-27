@@ -117,13 +117,13 @@
     {% load static %}
     <div id="Header" class="main-header">
         <div class="left">
-            <a href="">
-                <img src="{% static '/logos/logo_dasiha.png' %}" alt="Home">
-            </a> 
+            <a href="{% url 'libraryHomepage' %}">
+                <img src="{% static 'logos/logo_dasiha.png' %}" alt="Home">
+            </a>
         </div>
         <div class="mid">
             {% for game in games %}
-            <a href="{{ game.url }}">
+            <a href="{% url 'gameInfo' game.id %}">
                 <img src="{{ game.logo.url }}" alt="{{ game.name }} logo unavailable"> 
             </a>
             {% endfor %}

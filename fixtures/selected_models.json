@@ -1,0 +1,99 @@
+[
+
+{"model":"library.genre","pk":1,"fields":{"name":"Co-op"      }},
+{"model":"library.genre","pk":2,"fields":{"name":"Multiplayer"}},
+{"model":"library.genre","pk":3,"fields":{"name":"Platformer" }},
+{"model":"library.genre","pk":4,"fields":{"name":"Sport"      }},
+{"model":"library.genre","pk":5,"fields":{"name":"Gamble"     }},
+{"model":"library.genre","pk":6,"fields":{"name":"Card"        }},
+
+{"model": "library.author","pk": 1, "fields": {"name": "Šimon Bendl"}},
+{"model": "library.author","pk": 2, "fields": {"name": "David Kyndl"}},
+{"model": "library.author","pk": 3, "fields": {"name": "Hana Hajná" }},
+
+{
+  "model": "library.game",
+  "pk": 2,
+  "fields": {
+    "name": "Dave's Balls",
+    "logo": "logos/logo_daveballs.png",
+    "preview": "previews/pre_daveballs.png",
+    "thumbnail": "thumbnails/thum_daveballs.jpg",
+    "code_path": null,
+    "descript": "",
+    "genre": [
+      4
+    ],
+    "autor": [
+      2
+    ],
+    "favorited_by": [
+      3
+    ]
+  }
+},
+{
+  "model": "library.game",
+  "pk": 3,
+  "fields": {
+    "name": "Runner",
+    "logo": "logos/logo_runner.png",
+    "preview": "previews/pre_runner.png",
+    "thumbnail": "thumbnails/thum_runner.png",
+    "code_path": null,
+    "descript": "",
+    "genre": [
+      3
+    ],
+    "autor": [
+      3
+    ],
+    "favorited_by": [
+      3
+    ]
+  }
+},
+{
+  "model": "library.game",
+  "pk": 4,
+  "fields": {
+    "name": "Donkey Kong",
+    "logo": "logos/logo_dkong.png",
+    "preview": "previews/pre_dkong.png",
+    "thumbnail": "thumbnails/thum_dkong.png",
+    "code_path": null,
+    "descript": "",
+    "genre": [
+      3
+    ],
+    "autor": [
+      1
+    ],
+    "favorited_by": [
+      3
+    ]
+  }
+},
+{
+  "model": "library.game",
+  "pk": 1,
+  "fields": {
+    "name": "Ledvadva",
+    "logo": "logos/logo_ledva_9VCf7qt.png",
+    "preview": "previews/pre_ledvadva.png",
+    "thumbnail": "thumbnails/thum_ledvadva.png",
+    "code_path": null,
+    "descript": "",
+    "genre": [
+      1,
+      3
+    ],
+    "autor": [
+      1
+    ],
+    "favorited_by": [
+      3
+    ]
+  }
+}
+]

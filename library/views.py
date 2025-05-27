@@ -20,7 +20,7 @@ from django.conf import settings
 
 def gameInfo(request, id):
     game = get_object_or_404(Game, pk=id)
-    all_games = Game.objects.all()
+    all_games = Game.objects.exclude(pk=game.pk)
 
     return render(request, 'game.html', {
         'game': game,
@@ -28,7 +28,6 @@ def gameInfo(request, id):
         })
 
 def libraryHomepage(request):
-
     all_games = Game.objects.all().prefetch_related('favorited_by') 
 
     for game in all_games:

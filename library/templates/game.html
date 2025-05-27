@@ -1,26 +1,37 @@
 {% extends 'base.html' %}
+{% load static %}
 {%block styles%}
 {{block.super}}
   <style>
     main {
       margin: 10px;
       display: flex;
+      flex-direction:row;
+      justify-content: space-between;
     }
     .gameSection {
-        align-items: center;
-        justify-content: center;
-        display: flex;
-        flex-basis: 70%;
-        flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      display: flex;
+      flex-basis: 70%;
+      flex-direction: column;
     }
     .gameSection .game-Controls{
-        display: flex;
-        flex-direction:row;
-        justify-content: space-between;
-        width: 95%;
+      display: flex;
+      flex-direction:row;
+      justify-content: space-between;
+      width: 100%;
+      background-color: tan;
     }
-    .game-Controls .rateings{
-        max-height: 25px;
+    .game-Controls .rateings {
+        display: flex;
+        flex-direction: row;
+        margin-left: 2%;
+        margin: 0.6%;
+        gap: 3%;
+    }
+    .game-Controls .rateings img{
+        max-height: 20px;
     }
     .game-Controls .fullscreen{
         max-height: 25px;
@@ -37,7 +48,7 @@
     .ad-Panel{
         background-color: tan;
         margin: 0;
-        flex-basis: 15%;
+        flex-basis: 13%;
     }
     .ad-Panel img{
         width: 100%;
@@ -62,7 +73,14 @@
     <div class = "gameSection">
         <canvas id="herniRozhraní" width="1920" height="1080"></canvas>
         <div class="game-Controls">
-        <img src="../Main-Website/PNG/sss.png" alt="rateings" class="rateings">
+        <div class="rateings">
+
+          <img src="{% static 'logos/logo_fav.png' %}" alt="fav-icon">
+          <img src="{% static 'logos/logo_nonfav.png' %}" alt="fav-icon">
+          <img src="{% static 'logos/logo_nonfav.png' %}" alt="fav-icon">
+          <img src="{% static 'logos/logo_nonfav.png' %}" alt="fav-icon">
+          <img src="{% static 'logos/logo_nonfav.png' %}" alt="fav-icon">
+        </div>
         <img src="../Main-Website/PNG/fullscreen.png" alt="fullscreen" class="fullscreen" id="fullscreenButton">
         </div>
     </div>
@@ -82,4 +100,6 @@
       }
     });
   </script>
+  
+  {% include 'partial/game_library.html' %}
 {% endblock %}
