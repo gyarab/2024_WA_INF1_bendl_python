@@ -32,13 +32,47 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-g0!-xt$_z2=71sfjiz$&ma5h@%2@p=o^es^s=dnsy@@%-q!n(%'
+SECRET_KEY = 'g0!-xt$_z2=71sfjiz$&ma5h@%2@p=o^es^s=dnsy@@%-q!n(%'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 if current_hostname == "avava":
     DEBUG = False
 else:
     DEBUG = True
+
+LOG_DIR = os.path.join(BASE_DIR, 'logs')
+os.makedirs(LOG_DIR, exist_ok=True)  # Ensure the log directory exists
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,  # Keeps Django's default loggers
+    'formatters': {
+        'verbose': {
+            'format': '{asctime} [{levelname}] {name} - {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'file': {
+            'level': 'ERROR',  # You can change to DEBUG/INFO/WARNING as needed
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(LOG_DIR, 'errors.log'),
+            'formatter': 'verbose',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+        'django.request': {
+            'handlers': ['file'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+    },
+}
 
 ALLOWED_HOSTS = []
 
