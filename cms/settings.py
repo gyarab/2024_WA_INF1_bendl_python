@@ -10,6 +10,7 @@ from pathlib import Path
 import os
 import socket
 
+current_hostname = socket.gethostname()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -34,7 +35,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 SECRET_KEY = 'django-insecure-g0!-xt$_z2=71sfjiz$&ma5h@%2@p=o^es^s=dnsy@@%-q!n(%'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+if current_hostname == "avava":
+    DEBUG = False
+else:
+    DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -83,7 +87,6 @@ WSGI_APPLICATION = 'cms.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-current_hostname = socket.gethostname()
 
 if current_hostname == "avava":
     DATABASES = {

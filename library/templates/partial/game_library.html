@@ -25,6 +25,9 @@
         .game-detail:hover img{
             filter: brightness(0.7);
         }
+        .game-detail .overlay img:hover {
+            filter: brightness(1);
+        }
         .game-detail:hover,
         .game-detail:hover img,
         .game-detail:hover .overlay {
@@ -61,6 +64,14 @@
             align-items: center;
             backdrop-filter: blur(2px);
             background-color: rgba(255, 255, 255, 0.2);
+        }
+        .overlay img {
+            height: 60%;
+            width: auto;
+            padding: 2% 4%;
+            position: absolute;
+            left: 20px;
+            cursor: pointer;
         }
         .game-detail:hover .overlay{
             height: 30%;
@@ -102,7 +113,7 @@
             />
         {% endif %}
         <div class="overlay">
-            <h1></h1>
+            <img src="{% static 'icons/play.png' %}" alt="play">
         </div>
     <!--
         <img 
