@@ -6,4 +6,4 @@ library/__pycache__/
 library/migrations/__pycache__/
 # database files
 db.sqlite3
-# media/
+media/

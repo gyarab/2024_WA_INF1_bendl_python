@@ -44,13 +44,13 @@
     "model": "library.game",
     "pk": 4,
     "fields": {
-      "name": "Donkey Kong",
-      "logo": "logos/logo_dkong.png",
-      "preview": "previews/pre_dkong.png",
-      "thumbnail": "thumbnails/thum_dkong.png",
+      "name": "Defaul",
+      "logo":"logos/logo_default.png",
+      "preview":"previews/pre_default.png",
+      "thumbnail":"thumbnails/thum_default.png",
       "code_path": null,
       "descript": "",
-      "genre": [3],
+      "genre": [],
       "autors": [1],
       "favorited_by": []
     }
