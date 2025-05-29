@@ -11,35 +11,31 @@ import os
 import socket
 
 current_hostname = socket.gethostname()
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-FIXTURE_DIRS = [BASE_DIR / "fixtures/"]
-MEDIA_URL = '/media/' #'/var/caddy.root.d/dasiha.svs.gyarab.cz/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.1/howto/static-files/
+FIXTURE_DIRS = [BASE_DIR / "fixtures/"]
+
+MEDIA_URL = '/media/' #'/var/caddy.root.d/dasiha.svs.gyarab.cz/media/'
+MEDIA_ROOT = BASE_DIR / 'media' # MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Static files https://docs.djangoproject.com/en/5.1/howto/static-files/
 STATIC_URL = 'static/'
 
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
+# Default primary key field type https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
-# Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
+# SECURITY WARNING: keep the secret key used in production secret! Tak pardón
 SECRET_KEY = 'g0!-xt$_z2=71sfjiz$&ma5h@%2@p=o^es^s=dnsy@@%-q!n(%'
 
-# SECURITY WARNING: don't run with debug turned on in production!
+# DEBUG shouldn´t be set to True in production!
 if current_hostname == "avava":
     DEBUG = False
 else:
     DEBUG = True
-
+########################------Logs-------#############################
 LOG_DIR = os.path.join(BASE_DIR, 'logs')
 os.makedirs(LOG_DIR, exist_ok=True)  # Ensure the log directory exists
 
@@ -74,11 +70,13 @@ LOGGING = {
     },
 }
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ["dasiha.svs.gyarab.cz", "127.0.0.1", ]
+CSRF_TRUSTED_ORIGINS = [
+    "https://dasiha.svs.gyarab.cz",
+]
+CSRF_COOKIE_SECURE = True
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
