@@ -12,33 +12,47 @@ import socket
 
 current_hostname = socket.gethostname()
 
-
 BASE_DIR = Path(__file__).resolve().parent.parent
+ROOT_URLCONF = 'cms.urls'
 
-FIXTURE_DIRS = [BASE_DIR / "fixtures/"]
+FIXTURE_DIRS = [BASE_DIR / "fixtures"]
 
-MEDIA_URL = '/media/' #'/var/caddy.root.d/dasiha.svs.gyarab.cz/media/'
+MEDIA_URL = 'media/' #'/var/caddy.root.d/dasiha.svs.gyarab.cz/media/'
 MEDIA_ROOT = BASE_DIR / 'media' # MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Static files https://docs.djangoproject.com/en/5.1/howto/static-files/
 STATIC_URL = 'static/'
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
-]
-
+STATICFILES_DIRS = []
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Default primary key field type https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
-# SECURITY WARNING: keep the secret key used in production secret! Tak pardón
-SECRET_KEY = 'g0!-xt$_z2=71sfjiz$&ma5h@%2@p=o^es^s=dnsy@@%-q!n(%'
+# Sould defietly be changed in production mode
+SECRET_KEY = 'django-insecure-g0!-xt$_z2=71sfjiz$&ma5h@%2@p=o^es^s=dnsy@@%-q!n(%'
 
-# DEBUG shouldn´t be set to True in production!
+####################------Production-Mode-------#########################
 if current_hostname == "avava":
+    print("Running in production mode")
     DEBUG = False
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'db4136',
+            'USER': 'db4136',
+            'PASSWORD': '',
+        }
+    }
 else:
     DEBUG = True
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+
 ########################------Logs-------#############################
 LOG_DIR = os.path.join(BASE_DIR, 'logs')
 os.makedirs(LOG_DIR, exist_ok=True)  # Ensure the log directory exists
@@ -169,6 +183,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
