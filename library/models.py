@@ -14,8 +14,8 @@ class Author(models.Model):
     
 class Game(models.Model):
     name  = models.CharField (max_length=100)
-    genre = models.ManyToManyField(Genre)
-    autors = models.ManyToManyField(Author)
+    genres = models.ManyToManyField(Genre)
+    authors = models.ManyToManyField(Author)
     logo      = models.ImageField(
         upload_to = 'logos/'  ,
         default = 'logos/logo_default.png',
@@ -33,6 +33,7 @@ class Game(models.Model):
     
     code_path = models.CharField(blank=True, null=True)
     descript  = models.TextField(blank=True, null=True)
+    needs_login = models.BooleanField(default=False)
     favorited_by = models.ManyToManyField(User, related_name='favorite_games', blank=True)
     
     def __str__(self):

@@ -130,22 +130,14 @@
         </div>
         <div class="right">
             {% if request.user.is_authenticated %}
-            <li>
             <a class="hover:text-gray-400" href="{% url 'libraryHomepage' %}" id="user">{{request.user}}</a>
-            </li>
-            <li>
-                <form method="post" action="{% url 'logout' %}">
-                    {% csrf_token %}
-                    <button type="submit">Logout</button>
-                </form>
-            </li>
+            <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit">Logout</button>
+            </form>
             {% else %}
-            <li>
             <a class="hover:text-gray-400" href="{% url 'login' %}" id="login">Login</a>
-            </li>
-            <li>
             <a class="hover:text-gray-400" href="{% url 'register' %}" id="register">Register</a>
-            </li>
             {% endif %}
             <a href="" >
                 <img src="{% static 'icons/account.png' %}" alt="Account">

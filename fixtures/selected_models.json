@@ -20,8 +20,8 @@
       "thumbnail": "thumbnails/thum_daveballs.jpg",
       "code_path": null,
       "descript": "",
-      "genre": [4],
-      "autors": [2],
+      "genres": [4],
+      "authors": [2],
       "favorited_by": []
     }
   },
@@ -35,8 +35,8 @@
       "thumbnail": "thumbnails/thum_runner.png",
       "code_path": null,
       "descript": "",
-      "genre": [3],
-      "autors": [3],
+      "genres": [3],
+      "authors": [3],
       "favorited_by": []
     }
   },
@@ -50,8 +50,8 @@
       "thumbnail":"thumbnails/thum_default.png",
       "code_path": null,
       "descript": "",
-      "genre": [],
-      "autors": [1],
+      "genres": [],
+      "authors": [1],
       "favorited_by": []
     }
   },
@@ -65,8 +65,8 @@
       "thumbnail": "thumbnails/thum_ledvadva.png",
       "code_path": null,
       "descript": "",
-      "genre": [1, 3],
-      "autors": [1],
+      "genres": [1, 3],
+      "authors": [1],
       "favorited_by": []
     }
   }

@@ -1,0 +1,26 @@
+{% load static %}
+<img 
+    class="game-thumbnail"
+    src="{{ game.thumbnail.url }}" 
+    alt="{{ game.name }} thumbnail is not available"
+>
+{% if user.is_authenticated %} 
+    <img 
+        class="fav-icon"
+        src="{% static 'icons/nonfav.png' %}" 
+        data-game-id="{{ game.id }}"
+        data-favorited="{{ game.is_favorited }}"
+        alt="fav-icon"
+    />
+{% endif %}
+<div class="overlay">
+{% if not game.needs_login or user.is_authenticated %}
+    <a href="{% url 'gameInfo' game.id %}">
+        <img src="{% static 'icons/play.png' %}" alt="play">
+    </a>
+{% else %}
+    <a href="{% url 'login' %}">
+        <img src="{% static 'icons/sign_to_play.png' %}" alt="login_to_play">
+    </a>
+{% endif %}
+</div>

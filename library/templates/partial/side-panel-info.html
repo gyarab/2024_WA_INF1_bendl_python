@@ -1,0 +1,87 @@
+<style>
+    .side-panel{
+        color: #492f09;
+        flex-basis: 18%;
+        display: flex;
+        flex-direction: column;
+        transition: flex-basis 0.3s;
+    }
+    .side-panel.collapsed {
+    flex-basis: 2%;
+      transition: flex-basis 0.3s;
+    }
+    .side-panel .var, .close, .content{
+        background-color: antiquewhite;
+        height: 100%;
+    }
+    .switch {
+      height: 6%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1.5%;
+    }
+    .switch .var,
+    .switch .close {
+        height: 100%;
+        flex-grow: 2;
+        font-size: 100%;
+        font-weight: bold;
+        justify-content: center;        
+        align-items: center;
+        display: flex;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+    .switch .close h1{
+        font-size: 1em;
+    }
+    .switch .close {
+      flex-grow: 1;
+      background-color: tan;
+    }
+    .switch .var {
+        background-color: tan;
+        transition: background-color 0.2s;
+    }
+    .switch .var.active {
+        background-color: antiquewhite;
+    }
+    @media (max-width: 768px) {
+        .side-panel {
+            display: none;
+        }
+    }
+</style>
+<div class="side-panel" id="sidePanel">
+  <div class="switch">
+    <div class="var" data-target="aboutContent">about</div>
+    <div class="var" data-target="controlsContent">controls</div>
+    <div class="close" id="closeBtn"> 
+      <h1 id="closeIcon">◄ </h1>
+      <h1 id="openIcon" style="display: none;">►</h1>
+    </div>
+  </div>
+  <div class="content" id="aboutContent">
+    <h3>{{ game.name }}</h3>
+    <p>{{ game.description }}</p>
+    <p>
+      Authors: 
+      {% for author in game.authors.all %}
+      <a href="{% url 'AuthorInfo' author.id %}">{{ author }}</a>
+        {% if not forloop.last %}, {% endif %} 
+      {% endfor %}
+    </p>
+    <p>
+      Genres: 
+      {% for genre in game.genres.all %}
+        <a href="{% url 'GenreInfo' genre.id %}">{{ genre }}</a>
+        {% if not forloop.last %}, {% endif %}
+      {% endfor %}
+    </p>
+  </div>
+  <div class="content" id="controlsContent" style="display: none;">
+    <h3>Controls</h3>
+    <p>Use WASD or arrow keys to move.</p>
+  </div>
+</div>

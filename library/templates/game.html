@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
+<!-- CSS -->
 {%block styles%}
-{{block.super}}
+  {{block.super}}
   <style>
     main {
       margin: 10px;
@@ -13,8 +14,11 @@
       align-items: center;
       justify-content: center;
       display: flex;
-      flex-basis: 70%;
       flex-direction: column;
+      flex-basis: 60%;
+    }
+    .gameSection.extended {
+      flex-basis: 76%;
     }
     .gameSection .game-Controls{
       display: flex;
@@ -24,11 +28,11 @@
       background-color: tan;
     }
     .game-Controls .rateings {
-        display: flex;
-        flex-direction: row;
-        margin-left: 2%;
-        margin: 0.6%;
-        gap: 3%;
+      display: flex;
+      flex-direction: row;
+      margin-left: 2%;
+      margin: 0.6%;
+      gap: 3%;
     }
     .game-Controls .rateings img{
         max-height: 20px;
@@ -45,19 +49,7 @@
         max-width: 1920px;
         max-height: 1080px;
     }
-    .ad-Panel{
-        background-color: tan;
-        margin: 0;
-        flex-basis: 13%;
-    }
-    .ad-Panel img{
-        width: 100%;
-        height: auto;
-    }
     @media (max-width: 768px) {
-        .ad-Panel {
-            display: none;
-        }
         .gameSection {
             flex-basis: 100%;
         }
@@ -67,39 +59,72 @@
     }
   </style>
 {% endblock %}
+<!-- HTML -->
 {% block content %}
   <main>
-    <div class = "ad-Panel" ><!----></div>
-    <div class = "gameSection">
-        <canvas id="herniRozhraní" width="1920" height="1080"></canvas>
-        <div class="game-Controls">
+    <!-- Left Side Panel -->
+      {% include 'partial/side-panel-info.html' %}
+    <!-- Game Section -->
+    <div class="gameSection">
+      <canvas id="herniRozhraní" width="1920" height="1080"></canvas>
+      <div class="game-Controls">
         <div class="rateings">
-
           <img src="{% static 'icons/fav.png' %}" alt="fav-icon">
           <img src="{% static 'icons/nonfav.png' %}" alt="fav-icon">
           <img src="{% static 'icons/nonfav.png' %}" alt="fav-icon">
           <img src="{% static 'icons/nonfav.png' %}" alt="fav-icon">
           <img src="{% static 'icons/nonfav.png' %}" alt="fav-icon">
         </div>
-        <img src="../Main-Website/PNG/fullscreen.png" alt="fullscreen" class="fullscreen" id="fullscreenButton">
-        </div>
+        F
+      </div>
     </div>
-    <div class = "ad-Panel"><!----></div>    
+    <!-- Right Side Panel -->
+    {% include 'partial/side-panel-comments.html' %}
   </main>
+<!-- JS -->
   <script>
-    document.getElementById('fullscreenButton').addEventListener('click', function() {
-      var canvas = document.getElementById('herniRozhraní');
-      if (canvas.requestFullscreen) {
-        canvas.requestFullscreen();
-      } else if (canvas.mozRequestFullScreen) { // Firefox
-        canvas.mozRequestFullScreen();
-      } else if (canvas.webkitRequestFullscreen) { // Chrome, Safari and Opera
-        canvas.webkitRequestFullscreen();
-      } else if (canvas.msRequestFullscreen) { // IE/Edge
-        canvas.msRequestFullscreen();
-      }
-    });
+      console.log("Side panel script loaded");
+      const sidePanel = document.getElementById('sidePanel');
+      const gameSection = document.querySelector('.gameSection');
+      const closeBtn = document.getElementById('closeBtn');
+      const varButtons = document.querySelectorAll('.switch .var');
+      const contents = document.querySelectorAll('.side-panel .content');
+      const closeIcon = document.getElementById('closeIcon');
+      const openIcon = document.getElementById('openIcon');
+
+      closeBtn.addEventListener('click', () => {
+          sidePanel.classList.toggle('collapsed');
+          gameSection.classList.toggle('extended');
+          contents.forEach(content => content.style.display = sidePanel.classList.contains('collapsed') ? 'none' : (document.querySelector('.switch .var.active')?.getAttribute('data-target') === content.id ? 'block' : 'none'));
+          varButtons.forEach(btn => btn.style.display = sidePanel.classList.contains('collapsed') ? 'none' : 'flex');
+          closeIcon.style.display = sidePanel.classList.contains('collapsed') ? 'none' : 'block';
+          openIcon.style.display = sidePanel.classList.contains('collapsed') ? 'block' : 'none';
+      });
+
+      varButtons.forEach(button => {
+          button.addEventListener('click', () => {
+          const targetId = button.getAttribute('data-target');
+
+          contents.forEach(content => {
+              content.style.display = content.id === targetId ? 'block' : 'none';
+          });
+
+          varButtons.forEach(btn => btn.classList.remove('active'));
+          button.classList.add('active');
+          });
+      });
+
+      // On page load: set "about" as default active
+      window.addEventListener('DOMContentLoaded', () => {
+          const defaultBtn = document.querySelector('.switch .var[data-target="aboutContent"]');
+          if (defaultBtn) {
+          defaultBtn.classList.add('active');
+          document.getElementById('aboutContent').style.display = 'block';
+          document.getElementById('controlsContent').style.display = 'none';
+          }
+      });
   </script>
-  
   {% include 'partial/game_library.html' %}
 {% endblock %}
+
+

@@ -1,23 +1,37 @@
 {% extends 'base.html' %}
-
+{% load static %}
+<!-- CSS -->
+{% block styles %}
+    {{ block.super }}
+    <style>
+    </style>
+{% endblock %}
+<!-- HTML -->
 {% block content %}
-    {% include 'partial/game_library.html' %}
-    <section class="comments">
-        <h2>Komentáře</h2>
-        {% for comment in comments %}
-            <p><strong>{{ comment.created_at }}</strong>: {{ comment.text }}</p>
-        {% empty %}
-            <p>Zatím žádné komentáře.</p>
-        {% endfor %}
-    </section>
+    <main>
+        <h1> About</h1>
+        {% include 'partial/game_library.html' %}
+        <!--
+        <section class="comments">
+            <h2>Komentáře</h2>
+            {% for comment in comments %}
+                <p><strong>{{ comment.created_at }}</strong>: {{ comment.text }}</p>
+            {% empty %}
+                <p>Zatím žádné komentáře.</p>
+            {% endfor %}
+        </section>
 
-    <section class="comment-form">
-        <h2>Přidat komentář</h2>
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Odeslat</button>
-        </form>
-    </section>
-    -->
+        <section class="comment-form">
+            <h2>Přidat komentář</h2>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Odeslat</button>
+            </form>
+        </section>
+        -->
+        <div id="klikz-12"></div>
+        <script src="https://klikz.svs.gyarab.cz/hit/12?size=small&front=faebd7&back=492f09"></script>
+    </main>
+<!-- JS -->
 {% endblock %}

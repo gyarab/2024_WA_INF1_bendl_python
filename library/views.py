@@ -1,7 +1,5 @@
-import os
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
-from django.http import HttpResponse
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
@@ -9,32 +7,64 @@ from django.views.generic.edit import FormView
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.http import JsonResponse
-from .models import Game
-from django.views.decorators.csrf import csrf_protect
-from django.utils.text import get_valid_filename
-from uuid import uuid4
-from django.conf import settings
-# library/views.py
+from .models import Game, Author, Genre
 
 
+
+def get_favorite_and_nonfavorite_games(gamesPool, user, excludeById=None):
+    """
+    tuple:
+    - favorite_games = list of games favorited by the user from game pool
+    - nonfavorite_games = list of games not favorited by the user / the whole pool if not authenticated.
+
+    """
+    if excludeById is not None:
+        gamesPool = gamesPool.exclude(pk=excludeById)
+    if user.is_authenticated:
+        favorite_games = gamesPool.filter(favorited_by=user)
+        nonfavorite_games = gamesPool.exclude(favorited_by=user)
+    else:
+        favorite_games = []
+        nonfavorite_games = gamesPool
+    return favorite_games, nonfavorite_games
+
+def libraryHomepage(request):
+    fav_games, nonfav_games = get_favorite_and_nonfavorite_games(Game.objects.all(), request.user)
+
+    return render(request, 'homepage.html', {
+        'favorite_games': fav_games,
+        'nonfavorite_games': nonfav_games
+    })
 
 def gameInfo(request, id):
     game = get_object_or_404(Game, pk=id)
-    all_games = Game.objects.exclude(pk=game.pk)
+    fav_games, nonfav_games = get_favorite_and_nonfavorite_games(Game.objects.all(), request.user, excludeById=game.pk)
 
     return render(request, 'game.html', {
         'game': game,
-        'games' : all_games
-        })
+        'favorite_games': fav_games,
+        'nonfavorite_games': nonfav_games,
+        
+    })
 
-def libraryHomepage(request):
-    all_games = Game.objects.all().prefetch_related('favorited_by') 
+def AuthorInfo(request, id):
+    author = get_object_or_404(Author, pk=id)
+    fav_games, nonfav_games = get_favorite_and_nonfavorite_games(Game.objects.filter(authors=author), request.user)
 
-    for game in all_games:
-        game.is_favorited = request.user.is_authenticated and request.user in game.favorited_by.all()
+    return render(request, 'author.html', {
+        'author': author,
+        'favorite_games': fav_games,
+        'nonfavorite_games': nonfav_games,
+    })
 
-    return render(request, 'homepage.html', {
-        'games':  all_games
+def GenreInfo(request, id):
+    genre = get_object_or_404(Genre, pk=id)
+    fav_games, nonfav_games = get_favorite_and_nonfavorite_games(Game.objects.filter(genres=genre), request.user)
+
+    return render(request, 'genre.html', {
+        'genre': genre,
+       'favorite_games': fav_games,
+        'nonfavorite_games': nonfav_games,
     })
 
 class LoginPageView(LoginView):

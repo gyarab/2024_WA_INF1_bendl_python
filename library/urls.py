@@ -10,6 +10,8 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(next_page='libraryHomepage'), name='logout'),
     path('register/', RegisterPageView.as_view(), name='register'),
     path('game/<int:id>/', views.gameInfo, name='gameInfo'),
+    path('author/<int:id>/', views.AuthorInfo, name='AuthorInfo'),
+    path('genre/<int:id>/', views.GenreInfo, name='GenreInfo'),
     path('toggle-favorite/', views.toggle_favorite, name='toggle_favorite'),
 
 ]
