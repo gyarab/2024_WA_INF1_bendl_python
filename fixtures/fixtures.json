@@ -1,0 +1,210 @@
+[
+    {
+        "model": "library.genre",
+        "pk": 1,
+        "fields": { "name": "Co-op" }
+    },
+    {
+        "model": "library.genre",
+        "pk": 2,
+        "fields": { "name": "Multiplayer" }
+    },
+    {
+        "model": "library.genre",
+        "pk": 3,
+        "fields": { "name": "Platformer" }
+    },
+    {
+        "model": "library.genre",
+        "pk": 4,
+        "fields": { "name": "Sport" }
+    },
+    {
+        "model": "library.genre",
+        "pk": 5,
+        "fields": { "name": "Gamble" }
+    },
+    {
+        "model": "library.genre",
+        "pk": 6,
+        "fields": { "name": "Card" }
+    },
+    {
+        "model": "library.author",
+        "pk": 1,
+        "fields": { "name": "Simon Bendl" }
+    },
+    {
+        "model": "library.author",
+        "pk": 2,
+        "fields": { "name": "David Kyndl" }
+    },
+    {
+        "model": "library.author",
+        "pk": 3,
+        "fields": { "name": "Hana Hajna" }
+    },
+    {
+        "model": "library.game",
+        "pk": 1,
+        "fields": {
+            "name": "Ledvadva",
+            "logo": "logos/logo_ledva.png",
+            "preview": "previews/pre_ledvadva.png",
+            "thumbnail": "thumbnails/thum_ledvadva.png",
+            "code_path": null,
+            "descript": "",
+            "needs_login": true,
+            "genres": [1, 3],
+            "authors": [1],
+            "favorited_by": [1, 2]
+        }
+    },
+    {
+        "model": "library.game",
+        "pk": 2,
+        "fields": {
+            "name": "Dave's Balls",
+            "logo": "logos/logo_daveballs.png",
+            "preview": "previews/pre_daveballs.png",
+            "thumbnail": "thumbnails/thum_daveballs.jpg",
+            "code_path": null,
+            "descript": "",
+            "needs_login": false,
+            "genres": [4],
+            "authors": [2],
+            "favorited_by": [1]
+        }
+    },
+    {
+        "model": "library.game",
+        "pk": 3,
+        "fields": {
+            "name": "Runner",
+            "logo": "logos/logo_runner.png",
+            "preview": "previews/pre_runner.png",
+            "thumbnail": "thumbnails/thum_runner.png",
+            "code_path": null,
+            "descript": "",
+            "needs_login": false,
+            "genres": [3],
+            "authors": [3],
+            "favorited_by": [2, 3]
+        }
+    },
+    {
+        "model": "library.game",
+        "pk": 4,
+        "fields": {
+            "name": "Default",
+            "logo": "logos/logo_default.png",
+            "preview": "previews/pre_default.png",
+            "thumbnail": "thumbnails/thum_default.png",
+            "code_path": null,
+            "descript": "",
+            "needs_login": false,
+            "genres": [1, 2, 3, 4, 5, 6],
+            "authors": [1, 2, 3],
+            "favorited_by": [2]
+        }
+    },
+    {
+        "model": "library.comment",
+        "pk": 27,
+        "fields": {
+            "game": 3,
+            "text": "zhit",
+            "created_at": "2025-06-11T21:31:30.557Z",
+            "ip_address": "127.0.0.1",
+            "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+        }
+    },
+    {
+        "model": "library.comment",
+        "pk": 28,
+        "fields": {
+            "game": 3,
+            "text": "jlknlk",
+            "created_at": "2025-06-11T21:35:42.386Z",
+            "ip_address": "127.0.0.1",
+            "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+        }
+    },
+    {
+        "model": "library.comment",
+        "pk": 29,
+        "fields": {
+            "game": 3,
+            "text": "jljl",
+            "created_at": "2025-06-11T21:35:45.817Z",
+            "ip_address": "127.0.0.1",
+            "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+        }
+    },
+    {
+        "model": "library.comment",
+        "pk": 30,
+        "fields": {
+            "game": 3,
+            "text": "knlknlknlk",
+            "created_at": "2025-06-11T21:35:49.973Z",
+            "ip_address": "127.0.0.1",
+            "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+        }
+    },
+    {
+        "model": "library.comment",
+        "pk": 31,
+        "fields": {
+            "game": 3,
+            "text": "klnlknlk",
+            "created_at": "2025-06-11T21:35:56.333Z",
+            "ip_address": "127.0.0.1",
+            "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+        }
+    },
+    {
+        "model": "library.comment",
+        "pk": 32,
+        "fields": {
+            "game": 3,
+            "text": "lknlkn",
+            "created_at": "2025-06-11T21:35:59.236Z",
+            "ip_address": "127.0.0.1",
+            "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+        }
+    },
+    {
+        "model": "library.comment",
+        "pk": 33,
+        "fields": {
+            "game": 3,
+            "text": "jnlknlk",
+            "created_at": "2025-06-11T21:36:02.767Z",
+            "ip_address": "127.0.0.1",
+            "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+        }
+    },
+    {
+        "model": "library.comment",
+        "pk": 34,
+        "fields": {
+            "game": 3,
+            "text": "knkln",
+            "created_at": "2025-06-11T21:36:05.354Z",
+            "ip_address": "127.0.0.1",
+            "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+        }
+    },
+    {
+        "model": "library.comment",
+        "pk": 35,
+        "fields": {
+            "game": 3,
+            "text": "nlknl",
+            "created_at": "2025-06-11T21:36:08.510Z",
+            "ip_address": "127.0.0.1",
+            "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+        }
+    }
+]

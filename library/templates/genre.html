@@ -1,1 +1,18 @@
 {% extends 'base.html' %}
+{% load static %}
+<!-- CSS -->
+{%block styles%}
+    {{block.super}}
+    <style>
+    </style>
+{% endblock %}
+<!-- HTML -->
+{% block content %}
+<h1>{{ genre.name }} games:</h1>
+<main>
+</main>
+<!-- JS -->
+    <script>
+    </script>
+  {% include 'partial/game_library.html' %}
+{% endblock %}

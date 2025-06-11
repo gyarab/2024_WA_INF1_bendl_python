@@ -1,57 +1,66 @@
 <style>
-    .side-panel{
-        color: #492f09;
-        flex-basis: 18%;
-        display: flex;
-        flex-direction: column;
-        transition: flex-basis 0.3s;
-    }
-    .side-panel.collapsed {
-    flex-basis: 2%;
-      transition: flex-basis 0.3s;
-    }
-    .side-panel .var, .close, .content{
-        background-color: antiquewhite;
-        height: 100%;
-    }
-    .switch {
-      height: 6%;
-      display: flex;
-      justify-content: space-between;
+  .side-panel{
+    color: var(--primary-dark);
+    flex-basis: 20%;
+    max-height: 100%;
+    width: 100%;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    transition: flex-basis 0.3s;
+  }
+  .side-panel.collapsed {
+    flex-basis: 4%;
+    width: auto;
+  }
+  .side-panel .var, .close, .content{
+    background-color: var(--primary-light);
+    height: 100%;
+  }
+  .side-panel .content {
+    padding: 2%;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .switch {
+    height: 6%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5%;
+  }
+  .switch .var,
+  .switch .close {
+      height: 100%;
+      flex-grow: 2;
+      font-size: 0.6rem;;
+      font-weight: bold;
+      justify-content: center;        
       align-items: center;
-      gap: 1.5%;
-    }
-    .switch .var,
-    .switch .close {
-        height: 100%;
-        flex-grow: 2;
-        font-size: 100%;
-        font-weight: bold;
-        justify-content: center;        
-        align-items: center;
-        display: flex;
-        cursor: pointer;
-        transition: background-color 0.2s;
-    }
-    .switch .close h1{
-        font-size: 1em;
-    }
-    .switch .close {
-      flex-grow: 1;
-      background-color: tan;
-    }
-    .switch .var {
-        background-color: tan;
-        transition: background-color 0.2s;
-    }
-    .switch .var.active {
-        background-color: antiquewhite;
-    }
-    @media (max-width: 768px) {
-        .side-panel {
-            display: none;
-        }
-    }
+      display: flex;
+      cursor: pointer;
+      transition: background-color 0.2s;
+  }
+  .switch .close h1{
+      font-size:small;
+  }
+  .switch .close {
+    flex-grow: 1;
+    background-color: var(--secondary-light);
+  }
+  .switch .var {
+      background-color: var(--secondary-light);
+      transition: background-color 0.2s;
+  }
+  .switch .var.active {
+      background-color: var(--primary-light);
+  }
+  @media (max-width: 768px) {
+      .side-panel {
+          display: none;
+      }
+  }
 </style>
 <div class="side-panel" id="sidePanel">
   <div class="switch">
@@ -82,6 +91,6 @@
   </div>
   <div class="content" id="controlsContent" style="display: none;">
     <h3>Controls</h3>
-    <p>Use WASD or arrow keys to move.</p>
+    <p>Use WASD or arrow keys to move. Idk try something :3 </p>
   </div>
 </div>

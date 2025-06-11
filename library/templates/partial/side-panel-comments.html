@@ -1,17 +1,59 @@
 
 <style>
-    .side-panel-r{
-        color: #492f09;
-        background-color: antiquewhite;
-        flex-basis: 18%;
+    .side-panel-r {
+        flex-basis: 20%;
+        padding: 0.5%;
+        background-color: var(--primary-light);
+        color: var(--primary-dark);
+        font-size: 0.7rem;
         display: flex;
         flex-direction: column;
-        transition: flex-basis 0.3s;
     }
-    @media (max-width: 768px) {
+    .side-panel-r h2 {
+        margin: 0.5em 0;
+        flex-shrink: 0;
+    }
+    .comments {
+        overflow-y: auto;
+        background-color: var(--secondary-light);
+        min-height: 0;
+    }
+    .comments span {
+        padding: 0.5em;
+        width: 100%;
+    }
+    .comment-form {
+        flex-shrink: 0;
+    }
+    @media (max-width: 920px) {
         .side-panel-r {
             display: none;
         }
     }
+
 </style>
- <div class="side-panel-r"></div>
+<div class="side-panel-r">
+    <h2>Komentáře</h2>
+    <section class="comments">
+        {% for comment in comments %}
+            <div class="comment">
+                <span style="font-size: 0.4rem;">{{ comment.created_at }}: /n</span>
+                <span>{{ comment.text }}</span>
+            </div>
+        {% empty %}
+            <p>Zatím žádné komentáře.</p>
+        {% endfor %}
+    </section>
+    <section class="comment-form">
+    {% if user.is_authenticated %}
+        <h2>Přidat komentář</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Odeslat</button>
+        </form>
+    {% else %}
+        <p><a href="{% url 'login' %}?next={{ request.path }}">Přihlas se</a> pro přidání komentáře.</p>
+    {% endif %}
+    </section>
+</div>

@@ -7,7 +7,8 @@ from django.views.generic.edit import FormView
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.http import JsonResponse
-from .models import Game, Author, Genre
+from .models import Game, Author, Genre, Comment
+from .forms import CommentForm
 
 
 
@@ -29,40 +30,62 @@ def get_favorite_and_nonfavorite_games(gamesPool, user, excludeById=None):
     return favorite_games, nonfavorite_games
 
 def libraryHomepage(request):
-    fav_games, nonfav_games = get_favorite_and_nonfavorite_games(Game.objects.all(), request.user)
+    games = Game.objects.all()
+    fav_games, nonfav_games = get_favorite_and_nonfavorite_games(games, request.user)
 
     return render(request, 'homepage.html', {
+        'games': games,
         'favorite_games': fav_games,
         'nonfavorite_games': nonfav_games
     })
 
 def gameInfo(request, id):
+    games = Game.objects.all()
     game = get_object_or_404(Game, pk=id)
-    fav_games, nonfav_games = get_favorite_and_nonfavorite_games(Game.objects.all(), request.user, excludeById=game.pk)
+    fav_games, nonfav_games = get_favorite_and_nonfavorite_games(games, request.user, excludeById=game.pk)
+
+    comments = game.comments.all().order_by('-created_at')
+
+    form = CommentForm()
+
+    if request.method == "POST" and request.user.is_authenticated:
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.game = game
+            comment.ip_address = request.META.get('REMOTE_ADDR')
+            comment.user_agent = request.META.get('HTTP_USER_AGENT')
+            comment.save()
+            return redirect('gameInfo', id=game.id)
 
     return render(request, 'game.html', {
         'game': game,
+        'games': games,
+        'comments': comments,
         'favorite_games': fav_games,
         'nonfavorite_games': nonfav_games,
-        
+        'form': form,
     })
-
 def AuthorInfo(request, id):
+    games = Game.objects.all()
     author = get_object_or_404(Author, pk=id)
     fav_games, nonfav_games = get_favorite_and_nonfavorite_games(Game.objects.filter(authors=author), request.user)
 
     return render(request, 'author.html', {
         'author': author,
+        'games': games,
         'favorite_games': fav_games,
         'nonfavorite_games': nonfav_games,
     })
 
 def GenreInfo(request, id):
+    games = Game.objects.all()
     genre = get_object_or_404(Genre, pk=id)
     fav_games, nonfav_games = get_favorite_and_nonfavorite_games(Game.objects.filter(genres=genre), request.user)
 
     return render(request, 'genre.html', {
         'genre': genre,
+        'games': games,
        'favorite_games': fav_games,
         'nonfavorite_games': nonfav_games,
     })

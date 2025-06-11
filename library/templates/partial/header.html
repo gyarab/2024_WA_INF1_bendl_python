@@ -1,125 +1,138 @@
 <style>
-    /*    Main header    */
     .main-header {
         display: flex;
         width: 100%;
-        background-color: antiquewhite;
+        background-color: var(--secondary-light);
     }
     .main-header img {
         width: 45px;
         height: 45px;
         object-fit: contain;
     }
-    /*    Left section    */
-    .main-header .left     {
-        flex: 1 1 15%;
+    .main-header .left      {
+        flex: 10%;
         display: flex;
+        margin-left: 3%;
+        margin-right: 3%;
         justify-content: flex-start;
-        padding: 20px;
         align-items: center;
     }
-    .main-header .left img {
-        width: 100%;
-        max-width: 80px;
-        min-width: 70px;
+    .main-header .left #burger-icon {
+        position: relative;
+        align-self: center;
+        margin-left: auto;
+        margin-right: 16%;
     }
-    /*    Middle section   */
+    .main-header .left img {
+        height: 24px;
+        width: auto;
+    }
     .main-header .mid      {
-        flex: 1 1 70%;
+        flex: 75%;
         display: flex;
         justify-content: center;
         align-items: center;
     }
-    .main-header .mid a    {
-        width: 100%;
-        max-width: 70px;
-        margin: 15px;
-    } 
-    .main-header .mid img  {
-        max-width: 50px;
-        max-height: 50px;
-        width: auto;
-        height: auto;
-        object-fit: contain;
+    .main-header .mid a   ,
+    .main-header .right a {
+        display: flex;
+        gap: 12px;
+        margin: 6px 16px;
+        border-radius: 10px;
     }
-    /*    Right section    */
+    .main-header .mid a:hover img,
+    .main-header .right a:hover img{
+        transform: scale(1.5);
+    }
+    .main-header .mid a   {
+        width: 60px;
+        height: 60px;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+        text-align: center;
+    }
+    .main-header .right a {
+        justify-content:right;
+    }
+    .main-header .mid img  {
+        max-width: 60px;
+        max-height: 60px;
+        width: max-content;
+        height: max-content;
+        transition: all 0.2s ease-in-out;
+    }
     .main-header .right    {
-        flex: 1 1 15%;
+        flex: 15%;
         display: flex;
         justify-content: flex-end;
         padding: 20px;
         align-items: center;
     }
     .main-header .right img{
-        width: 100%;
-        max-width: 40px;
+        max-width: 50px;
+        max-height: 50px;
+        object-fit: contain;
+    }
+    .burger-header {
+        background: var(--secondary-light);
+        border: 1px solid var(--primary-dark);
+    }
+    .burger-header-link {
+        color: var(--primary-dark);
+        font-size: 1.2em;
+        text-decoration: none;
+        transition: background 0.2s, color 0.2s;
+    }
+    .burger-header-link:hover {
+        background: var(--primary-light);
     }
     /*    Responsivity    */
-    @media (max-width: 768px) {
+    @media (max-width: 799px) {
         .main-header .mid{
             display: none;
         }
-        #burger-icon {
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            background-color: #ccc;
-            border-radius: 5px;
+        .main-header .left {
+            flex: 90%;
         }
-        #burger-menu {
+        .main-header #burger-icon {
+            display: block;
+        }
+        .burger-header {
             display: none;
+        }
+        .burger-header.show {
+            display: flex;
             flex-direction: column;
-            gap: 10px;
-            padding: 0;
-        }
-        #burger-toggle:checked + label + #burger-menu {
-            display: flex;
-        }
-        #burger-toggle:checked ~ .mid img {
-            display: none;
-        }
-        #burger-menu a {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px;
-            text-decoration: none;
-            color: black;
-        }
-        #burger-menu img {
-            width: 40px;
-            height: 40px;
         }
     }
-    @media (min-width: 769px) {
-        #burger-icon,
-        #burger-menu {
-            display: none;
-        }
+    @media (min-width: 800px) {
         .main-header .mid {
             display: flex;
-            flex-direction: row;
         }
-        .main-header .mid a img {
-            width: auto;
-            height: auto;
-            transition: all 0.2s ease-in-out;
+        .burger-header  ,
+        .main-header #burger-icon {
+            display: none;
         }
-        .main-header .mid a:hover img {
-            transform: scale(1.5);
-        }
+
     }
 </style>
 <header>
     {% load static %}
     <div id="Header" class="main-header">
         <div class="left">
-            <a href="{% url 'libraryHomepage' %}">
-                <img src="{% static 'icons/dasiha_logo.png' %}" alt="Home">
+            <a href  = "{% url 'libraryHomepage' %}" style = "display: flex;">
+                <img src="{% static 'icons/dasiha_logo.png' %}" alt="Home"
+                    style="margin-bottom: 0; padding-bottom: 0; "
+                >
             </a>
+            <img 
+                src="{% static 'icons/burger.png' %}" 
+                id="burger-icon"
+                alt="Menu"
+                style="cursor:pointer;"
+                onclick="document.querySelector('.burger-header').classList.toggle('show');"
+            >
         </div>
         <div class="mid">
             {% for game in games %}
@@ -142,10 +155,18 @@
             <a href="" >
                 <img src="{% static 'icons/account.png' %}" alt="Account">
             </a>
-            <a href="" >
+            <a href="{% url 'admin:index' %}">
                 <img src="{% static 'icons/setting.png' %}" alt="Settings">
             </a>
         </div>
     </div>
+    <div id="Burger" class="burger-header">
+        {% for game in games %}
+        <a href="{% url 'gameInfo' game.id %}" class="burger-header-link">
+            {{ game.name }}
+        </a>
+        {% endfor %}
+    </div>
 </header>
+
 

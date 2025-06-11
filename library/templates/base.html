@@ -6,15 +6,25 @@
     </head>
     {%block styles%}
         <style>
+            @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+            :root {
+                --primary-light:antiquewhite;
+                --secondary-light: rgb(209, 193, 184);
+                --primary-dark: rgb(54, 43, 37);
+            }
             * {
                 box-sizing: border-box;
             }
             body {
                 margin: 0;
-                color: antiquewhite;
-                background-color: #492f09;
-                font-style: Times New Roman;
-
+                color: var(--primary-light);
+                background-color: var(--primary-dark);
+                font-family: 'Press Start 2P', cursive;
+            }
+            .pixel-text {
+                font-family: 'Press Start 2P', cursive;
+                color: var(--primary-light);
+                font-size: 14px; /* Or whatever size you need */
             }
         </style>
     {%endblock%}

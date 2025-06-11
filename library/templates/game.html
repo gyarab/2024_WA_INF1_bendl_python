@@ -4,28 +4,34 @@
 {%block styles%}
   {{block.super}}
   <style>
+    * {
+      box-sizing: border-box;
+    }
     main {
-      margin: 10px;
+      width: 100%;
+      height: auto;
+      gap: 1%;
       display: flex;
-      flex-direction:row;
-      justify-content: space-between;
+      flex-direction:row; 
+    }
+    main > * {
+      outline: 2px dashed red;
     }
     .gameSection {
-      align-items: center;
-      justify-content: center;
+      flex-basis: 60%;
+      background-color: brown;
       display: flex;
       flex-direction: column;
-      flex-basis: 60%;
     }
     .gameSection.extended {
-      flex-basis: 76%;
+      flex-basis: 80;
     }
     .gameSection .game-Controls{
       display: flex;
       flex-direction:row;
       justify-content: space-between;
       width: 100%;
-      background-color: tan;
+      background-color: var(--secondary-light);;
     }
     .game-Controls .rateings {
       display: flex;
@@ -39,28 +45,33 @@
     }
     .game-Controls .fullscreen{
         max-height: 25px;
-        background-color: tan;
+        background-color: var(--secondary-light);;
     }
     canvas {
-        border: 1px solid black;
-        background-color: white;
-        width: 100%;
-        height: auto;
-        max-width: 1920px;
-        max-height: 1080px;
+      aspect-ratio: 16 / 9;
+      width: 100%;
+      max-width: 1080px;
+      height: auto;
+      background-color: var(--primary-light);
     }
+     @media (max-width: 920px) {
+      .gameSection {
+          flex-basis: 80%;
+      } 
+     }
     @media (max-width: 768px) {
-        .gameSection {
-            flex-basis: 100%;
-        }
-        canvas {
-            width: 100%;
-        }
+      .gameSection {
+          flex-basis: 100%;
+      }
+      canvas {
+          width: 100%;
+      }
     }
   </style>
 {% endblock %}
 <!-- HTML -->
 {% block content %}
+  <div style="height: 10px;"></div>
   <main>
     <!-- Left Side Panel -->
       {% include 'partial/side-panel-info.html' %}
@@ -81,17 +92,19 @@
     <!-- Right Side Panel -->
     {% include 'partial/side-panel-comments.html' %}
   </main>
+  <div style="height: 10px;"></div>
 <!-- JS -->
   <script>
-      console.log("Side panel script loaded");
-      const sidePanel = document.getElementById('sidePanel');
+      const rightPanel = document.getElementById('sidePanel-r');
+      const leftPanel = document.querySelector('.side-panel');
       const gameSection = document.querySelector('.gameSection');
       const closeBtn = document.getElementById('closeBtn');
       const varButtons = document.querySelectorAll('.switch .var');
       const contents = document.querySelectorAll('.side-panel .content');
       const closeIcon = document.getElementById('closeIcon');
       const openIcon = document.getElementById('openIcon');
-
+      const main = document.querySelector('main');
+      
       closeBtn.addEventListener('click', () => {
           sidePanel.classList.toggle('collapsed');
           gameSection.classList.toggle('extended');
