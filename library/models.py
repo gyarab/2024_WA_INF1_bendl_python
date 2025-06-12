@@ -31,7 +31,7 @@ class Game(models.Model):
         default = 'thumbnails/thumbnail_default.png',
         blank=True, null=True)
     
-    code_path = models.CharField(blank=True, null=True)
+    code_path = models.CharField(blank=True, null=True, max_length=100)
     descript  = models.TextField(blank=True, null=True)
     needs_login = models.BooleanField(default=False)
     favorited_by = models.ManyToManyField(User, related_name='favorite_games', blank=True)
