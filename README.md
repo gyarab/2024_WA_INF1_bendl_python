@@ -17,7 +17,6 @@
 * Obsahuje atributy:
   - `name` (název hry)
   - `descript` (popis hry)
-  - `code_path` (cesta ke spuštění hry)
   - `needs_login` (zda je potřeba přihlášení ke spuštění)
   - `logo`, `preview`, `thumbnail` (obrázky hry)
   - `favorited_by` (uživatelé, kteří si hru označili jako oblíbenou)
